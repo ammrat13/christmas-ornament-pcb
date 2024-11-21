@@ -1,0 +1,11 @@
+# Ignore KiCad backup folder
+/*-backups/
+
+# Ignore fabrication outputs
+*.gbr
+*.gbrjob
+*.drl
+*.csv
+
+# Ignore caches
+/fp-info-cache
