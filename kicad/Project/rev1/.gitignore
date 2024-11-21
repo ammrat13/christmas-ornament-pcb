@@ -1,5 +1,6 @@
-# Ignore KiCad backup folder
+# Ignore KiCad backups
 /*-backups/
+*.bak
 
 # Ignore fabrication outputs
 Fabrication/
