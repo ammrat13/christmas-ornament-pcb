@@ -6,7 +6,8 @@
 	(paper "B")
 	(title_block
 		(title "Christmas Ornament")
-		(rev "0.1")
+		(date "2024-11-20")
+		(rev "1")
 		(company "Ammar Ratnani <aratnani@stanford.edu>")
 		(comment 1 "Stanford, CA 94305-9505")
 		(comment 2 "350 Jane Stanford Way")

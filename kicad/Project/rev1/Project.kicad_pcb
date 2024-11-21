@@ -7,6 +7,16 @@
 		(legacy_teardrops no)
 	)
 	(paper "B")
+	(title_block
+		(title "Christmas Ornament")
+		(date "2024-11-20")
+		(rev "1")
+		(company "Ammar Ratnani <aratnani@stanford.edu>")
+		(comment 1 "Stanford, CA 94305-9505")
+		(comment 2 "350 Jane Stanford Way")
+		(comment 3 "Electrical Engineering Deparment")
+		(comment 4 "EE 156 / Stanford University")
+	)
 	(layers
 		(0 "F.Cu" signal)
 		(1 "In1.Cu" power)
