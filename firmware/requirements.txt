@@ -1,0 +1,6 @@
+neopixel==6.3.12
+adafruit_veml7700==2.0.2
+adafruit_adxl34x==1.12.13
+adafruit_bluefruitspi==1.1.20
+adafruit_sdcard==3.3.24
+adafruit_register==1.10.1
