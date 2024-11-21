@@ -1,0 +1,9 @@
+# Ignore KiCad backups
+/*-backups/
+*.bak
+
+# Ignore fabrication outputs
+Fabrication/
+
+# Ignore caches
+/fp-info-cache
