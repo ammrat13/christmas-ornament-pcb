@@ -9,3 +9,6 @@ folder may be needed to edit these files.
 ### Project Revision 1
   * Q1 uses the incorrect footprint. They should be rotated 120 degrees
     counter-clockwise.
+  * D2 and D3 don't have decoupling capacitors. They should have 1uF capacitors.
+  * D2 doesn't have a decoupling resistor on the data line. It should have a
+    470R on the input.
