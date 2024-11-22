@@ -1830,7 +1830,7 @@
 				)
 			)
 		)
-		(symbol "LED:WS2812B"
+		(symbol "LED:SK6812MINI"
 			(pin_names
 				(offset 0.254)
 			)
@@ -1846,7 +1846,7 @@
 					(justify right bottom)
 				)
 			)
-			(property "Value" "WS2812B"
+			(property "Value" "SK6812MINI"
 				(at 1.27 -5.715 0)
 				(effects
 					(font
@@ -1855,7 +1855,7 @@
 					(justify left top)
 				)
 			)
-			(property "Footprint" "LED_SMD:LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm"
+			(property "Footprint" "LED_SMD:LED_SK6812MINI_PLCC4_3.5x3.5mm_P1.75mm"
 				(at 1.27 -7.62 0)
 				(effects
 					(font
@@ -1865,7 +1865,7 @@
 					(hide yes)
 				)
 			)
-			(property "Datasheet" "https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf"
+			(property "Datasheet" "https://cdn-shop.adafruit.com/product-files/2686/SK6812MINI_REV.01-1-2.pdf"
 				(at 2.54 -9.525 0)
 				(effects
 					(font
@@ -1884,7 +1884,7 @@
 					(hide yes)
 				)
 			)
-			(property "ki_keywords" "RGB LED NeoPixel addressable"
+			(property "ki_keywords" "RGB LED NeoPixel Mini addressable"
 				(at 0 0 0)
 				(effects
 					(font
@@ -1893,7 +1893,7 @@
 					(hide yes)
 				)
 			)
-			(property "ki_fp_filters" "LED*WS2812*PLCC*5.0x5.0mm*P3.2mm*"
+			(property "ki_fp_filters" "LED*SK6812MINI*PLCC*3.5x3.5mm*P1.75mm*"
 				(at 0 0 0)
 				(effects
 					(font
@@ -1902,7 +1902,7 @@
 					(hide yes)
 				)
 			)
-			(symbol "WS2812B_0_0"
+			(symbol "SK6812MINI_0_0"
 				(text "RGB"
 					(at 2.286 -4.191 0)
 					(effects
@@ -1912,7 +1912,7 @@
 					)
 				)
 			)
-			(symbol "WS2812B_0_1"
+			(symbol "SK6812MINI_0_1"
 				(polyline
 					(pts
 						(xy 1.27 -3.556) (xy 1.778 -3.556)
@@ -2009,25 +2009,7 @@
 					)
 				)
 			)
-			(symbol "WS2812B_1_1"
-				(pin power_in line
-					(at 0 7.62 270)
-					(length 2.54)
-					(name "VDD"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
+			(symbol "SK6812MINI_1_1"
 				(pin output line
 					(at 7.62 0 180)
 					(length 2.54)
@@ -2038,7 +2020,7 @@
 							)
 						)
 					)
-					(number "2"
+					(number "1"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2056,7 +2038,7 @@
 							)
 						)
 					)
-					(number "3"
+					(number "2"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -2068,6 +2050,24 @@
 					(at -7.62 0 0)
 					(length 2.54)
 					(name "DIN"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at 0 7.62 270)
+					(length 2.54)
+					(name "VDD"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -10703,172 +10703,6 @@
 		)
 	)
 	(symbol
-		(lib_id "LED:WS2812B")
-		(at 199.39 57.15 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "4cf52bdc-e3f5-4658-ada6-55ea44bf59f4")
-		(property "Reference" "D2"
-			(at 210.82 50.8314 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "WS2812B"
-			(at 210.82 53.3714 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "LED_SMD:LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm"
-			(at 200.66 64.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://cdn.sparkfun.com/datasheets/BreakoutBoards/WS2812B.pdf"
-			(at 201.93 66.675 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "Description" "RGB LED with integrated controller"
-			(at 199.39 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mfr" "SparkFun Electronics"
-			(at 199.39 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mfr P/N" "COM-16347"
-			(at 199.39 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Supplier 1" "DigiKey"
-			(at 199.39 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Supplier 1 P/N" "1568-COM-16347CT-ND"
-			(at 199.39 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Supplier 1 Unit Price" "0.60"
-			(at 199.39 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Supplier 1 Price @ Qty" "0.60"
-			(at 199.39 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Supplier 2" ""
-			(at 199.39 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Supplier 2 P/N" ""
-			(at 199.39 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Supplier 2 Unit Price" ""
-			(at 199.39 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Supplier 2 Price @ Qty" ""
-			(at 199.39 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "98a034ff-fd6e-485e-b782-df13323066ea")
-		)
-		(pin "3"
-			(uuid "55af2db8-de37-4448-81fe-4d185b374372")
-		)
-		(pin "1"
-			(uuid "b9020319-e858-4be2-a691-7a48495e0491")
-		)
-		(pin "4"
-			(uuid "2efe0403-3a17-4a8d-99c6-2f6c816bc2bd")
-		)
-		(instances
-			(project ""
-				(path "/bd24c4db-4e36-4117-bd4f-5228ef241da9"
-					(reference "D2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C")
 		(at 207.01 100.33 0)
 		(unit 1)
@@ -11531,172 +11365,6 @@
 		)
 	)
 	(symbol
-		(lib_id "LED:WS2812B")
-		(at 228.6 57.15 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "53ed65ce-829f-4aee-ada7-cfd12c4387b4")
-		(property "Reference" "D3"
-			(at 240.03 50.8314 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "WS2812B"
-			(at 240.03 53.3714 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "LED_SMD:LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm"
-			(at 229.87 64.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://cdn.sparkfun.com/datasheets/BreakoutBoards/WS2812B.pdf"
-			(at 231.14 66.675 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "Description" "RGB LED with integrated controller"
-			(at 228.6 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mfr" "SparkFun Electronics"
-			(at 228.6 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mfr P/N" "COM-16347"
-			(at 228.6 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Supplier 1" "DigiKey"
-			(at 228.6 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Supplier 1 P/N" "1568-COM-16347CT-ND"
-			(at 228.6 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Supplier 1 Unit Price" "0.60"
-			(at 228.6 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Supplier 1 Price @ Qty" "0.60"
-			(at 228.6 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Supplier 2" ""
-			(at 228.6 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Supplier 2 P/N" ""
-			(at 228.6 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Supplier 2 Unit Price" ""
-			(at 228.6 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Supplier 2 Price @ Qty" ""
-			(at 228.6 57.15 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "4dfe16d2-d639-4200-bff6-019302b046d9")
-		)
-		(pin "3"
-			(uuid "0e61b22e-e367-4e5c-af98-53526c7702d3")
-		)
-		(pin "1"
-			(uuid "d1338079-89ea-4044-96c5-6521b52328a8")
-		)
-		(pin "4"
-			(uuid "543c2c64-44cf-4436-9bd0-07bb05f89d51")
-		)
-		(instances
-			(project "Project"
-				(path "/bd24c4db-4e36-4117-bd4f-5228ef241da9"
-					(reference "D3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R")
 		(at 193.04 187.96 0)
 		(unit 1)
@@ -12049,6 +11717,172 @@
 			(project "Project"
 				(path "/bd24c4db-4e36-4117-bd4f-5228ef241da9"
 					(reference "#PWR041")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:SK6812MINI")
+		(at 199.39 57.15 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "63942ed6-e996-4a57-923d-39f062256e0c")
+		(property "Reference" "D2"
+			(at 212.09 50.8314 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SK6812MINI"
+			(at 212.09 53.3714 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED_SK6812MINI_PLCC4_3.5x3.5mm_P1.75mm"
+			(at 200.66 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://cdn-shop.adafruit.com/product-files/2686/SK6812MINI_REV.01-1-2.pdf"
+			(at 201.93 66.675 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "RGB LED with integrated controller"
+			(at 199.39 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mfr" "Adafruit Industries LLC"
+			(at 199.39 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mfr P/N" "2659"
+			(at 199.39 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 1" "DigiKey"
+			(at 199.39 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 1 P/N" "1528-1542-ND"
+			(at 199.39 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 1 Unit Price" "4.95"
+			(at 199.39 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 1 Price @ Qty" "4.95"
+			(at 199.39 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 2" ""
+			(at 199.39 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 2 P/N" ""
+			(at 199.39 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 2 Unit Price" ""
+			(at 199.39 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 2 Price @ Qty" ""
+			(at 199.39 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "3"
+			(uuid "e022329c-6de7-4d9f-a15f-fdc6464ef2b5")
+		)
+		(pin "2"
+			(uuid "6231af01-bb0f-4e44-a103-6ff965a0b05c")
+		)
+		(pin "1"
+			(uuid "1c0f5f49-3646-4f95-86b2-4f7c8926806c")
+		)
+		(pin "4"
+			(uuid "41898e68-703c-4cc0-86b9-acd7e781e7bf")
+		)
+		(instances
+			(project ""
+				(path "/bd24c4db-4e36-4117-bd4f-5228ef241da9"
+					(reference "D2")
 					(unit 1)
 				)
 			)
@@ -12905,6 +12739,172 @@
 			(project ""
 				(path "/bd24c4db-4e36-4117-bd4f-5228ef241da9"
 					(reference "#PWR03")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "LED:SK6812MINI")
+		(at 228.6 57.15 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "6fc00d2a-4b78-4e92-bdfa-eedb24085e68")
+		(property "Reference" "D3"
+			(at 241.3 50.8314 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SK6812MINI"
+			(at 241.3 53.3714 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED_SK6812MINI_PLCC4_3.5x3.5mm_P1.75mm"
+			(at 229.87 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://cdn-shop.adafruit.com/product-files/2686/SK6812MINI_REV.01-1-2.pdf"
+			(at 231.14 66.675 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "Description" "RGB LED with integrated controller"
+			(at 228.6 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mfr" "Adafruit Industries LLC"
+			(at 228.6 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mfr P/N" "2659"
+			(at 228.6 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 1" "DigiKey"
+			(at 228.6 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 1 P/N" "1528-1542-ND"
+			(at 228.6 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 1 Unit Price" "4.95"
+			(at 228.6 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 1 Price @ Qty" "4.95"
+			(at 228.6 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 2" ""
+			(at 228.6 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 2 P/N" ""
+			(at 228.6 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 2 Unit Price" ""
+			(at 228.6 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier 2 Price @ Qty" ""
+			(at 228.6 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "3"
+			(uuid "fb5b5d51-d7a9-45c1-b1f6-d5f6a4b8ddb4")
+		)
+		(pin "2"
+			(uuid "ac5c84de-aaf7-4bfe-90ce-b2841ca90706")
+		)
+		(pin "1"
+			(uuid "45c001ef-ea3a-4280-bb4f-f6937a00a987")
+		)
+		(pin "4"
+			(uuid "39a7a972-9c8c-4efb-a348-8032ebb950a2")
+		)
+		(instances
+			(project "Project"
+				(path "/bd24c4db-4e36-4117-bd4f-5228ef241da9"
+					(reference "D3")
 					(unit 1)
 				)
 			)
