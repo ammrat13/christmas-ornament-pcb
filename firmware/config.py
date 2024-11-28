@@ -15,21 +15,21 @@ logger = adafruit_logging.getLogger()
 class ConfigOption():
     """Abstract class for configuration options."""
 
-    def __init__(self, ident: int, name: str, default, parser):
+    def __init__(self, ident, name, default, parser):
         self.ident = ident
         self.name = name
         self.default = default
         self.parser = parser
 
-    def parse(self, value: str):
+    def parse(self, value):
         return self.parser(value)
 
 class IntegerConfigOption(ConfigOption):
-    def __init__(self, ident: int, name: str, default: int):
+    def __init__(self, ident, name, default):
         super().__init__(ident, name, default, int)
 
 class BoolConfigOption(ConfigOption):
-    def __init__(self, ident: int, name: str, default: bool):
+    def __init__(self, ident, name, default):
         super().__init__(ident, name, default, bool)
 
 # Configuration Options
@@ -39,12 +39,12 @@ class BoolConfigOption(ConfigOption):
 
 CFG_RESET_BLE = BoolConfigOption(0, "RESET_BLE", False)
 
-_config_option_registry: list[ConfigOption] = [
+_config_option_registry = [
     CFG_RESET_BLE,
 ]
 """List of all possible configuration options."""
 
-_config_values: dict[int, ConfigOption] = {opt.ident: opt.default for opt in _config_option_registry}
+_config_values = {opt.ident: opt.default for opt in _config_option_registry}
 """
 Dictionary of current configuration values.
 
@@ -52,7 +52,7 @@ Initially, all the values are set to their default. But, this dictionary can be
 updated by the methods below.
 """
 
-def get_config_value(ident: int):
+def get_config_value(ident):
     """
     Get the value of a cofiguration option by its ID.
     :throws AssertionError: If the ID is not valid.
@@ -60,7 +60,7 @@ def get_config_value(ident: int):
     assert ident in _config_values
     return _config_values[ident]
 
-def set_config_value(ident: int, value):
+def set_config_value(ident, value):
     """
     Set the value of a configuration option by its ID.
     :throws AssertionError: If the ID is not valid.
@@ -74,7 +74,7 @@ def dump_config():
     for ident, value in _config_values.items():
         logger.info(f"    {ident}: {value}")
 
-def parse_config_line(line: str):
+def parse_config_line(line):
     """
     Parse a line of the configuration file configuration from a string.
 
