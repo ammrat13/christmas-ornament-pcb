@@ -55,7 +55,7 @@ Initially, all the values are set to their default. But, this dictionary can be
 updated by the methods below.
 """
 
-def get_config_value(ident):
+def get(ident):
     """
     Get the value of a cofiguration option by its ID.
     :throws AssertionError: If the ID is not valid.
@@ -63,7 +63,7 @@ def get_config_value(ident):
     assert ident in _config_values
     return _config_values[ident]
 
-def set_config_value(ident, value):
+def set(ident, value):
     """
     Set the value of a configuration option by its ID.
     :throws AssertionError: If the ID is not valid.

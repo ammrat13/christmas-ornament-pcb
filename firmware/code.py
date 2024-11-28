@@ -4,6 +4,7 @@ import platform
 
 import adafruit_logging
 
+import ble
 import config
 
 logger = adafruit_logging.getLogger()
@@ -19,6 +20,8 @@ def initialize_config():
     See: https://docs.circuitpython.org/projects/sd/en/latest/
     """
 
+    logger.info("Initializing the configuration...")
+
     # Try to open the configuration file. If it doesn't work, it's fine. Just
     # log a warning and use the default configuration.
     try:
@@ -30,9 +33,21 @@ def initialize_config():
 
     config.dump_config()
 
+def initialize_ble():
+    """
+    Initialize the BLE module. We'll factory-reset it if we have to. In any
+    case, we'll dump the info to the log.
+    """
+
+    if config.get(config.CFG_RESET_BLE.ident):
+        ble.factory_reset()
+        config.set(config.CFG_RESET_BLE.ident, False)
+
+    ble.dump_info()
+
+
 if __name__ == "__main__":
 
-    logger.info("Initialized the platform!")
-
-    logger.info("Initializing the configuration...")
+    logger.info("Got to `main`!")
     initialize_config()
+    initialize_ble()
