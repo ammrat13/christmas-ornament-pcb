@@ -15,22 +15,25 @@ logger = adafruit_logging.getLogger()
 class ConfigOption():
     """Abstract class for configuration options."""
 
-    def __init__(self, ident, name, default, parser):
+    def __init__(self, ident, name, default):
         self.ident = ident
         self.name = name
         self.default = default
-        self.parser = parser
 
     def parse(self, value):
-        return self.parser(value)
+        raise NotImplementedError()
 
 class IntegerConfigOption(ConfigOption):
     def __init__(self, ident, name, default):
-        super().__init__(ident, name, default, int)
+        super().__init__(ident, name, default)
+    def parse(self, value):
+        return int(value)
 
 class BoolConfigOption(ConfigOption):
     def __init__(self, ident, name, default):
-        super().__init__(ident, name, default, bool)
+        super().__init__(ident, name, default)
+    def parse(self, value):
+        return value.lower() == "true"
 
 # Configuration Options
 #
