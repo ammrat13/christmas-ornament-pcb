@@ -3,9 +3,11 @@
 import platform
 
 import adafruit_logging
+import asyncio
 
 import ble
 import config
+import task
 
 logger = adafruit_logging.getLogger()
 logger.setLevel(adafruit_logging.DEBUG)
@@ -51,3 +53,5 @@ if __name__ == "__main__":
     logger.info("Got to `main`!")
     initialize_config()
     initialize_ble()
+
+    asyncio.run(task.run())
