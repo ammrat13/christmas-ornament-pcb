@@ -10,6 +10,7 @@ import adafruit_adxl34x
 import adafruit_bluefruitspi
 import adafruit_sdcard
 import adafruit_veml7700
+import analogio
 import board
 import busio
 import digitalio
@@ -19,6 +20,7 @@ import storage
 # Pins
 LED_PIN = board.D13
 NEOPIXEL_PIN = board.D12
+BATTERY_PIN = board.BATTERY
 USD_CS_PIN = board.D6
 BLE_CS_PIN = board.D9
 BLE_RST_PIN = board.D10
@@ -33,6 +35,8 @@ LED = digitalio.DigitalInOut(LED_PIN)
 LED.direction = digitalio.Direction.OUTPUT
 # NeoPixel
 NEOPIXEL = neopixel.NeoPixel(NEOPIXEL_PIN, 2, auto_write=False)
+# Battery
+BATTERY = analogio.AnalogIn(BATTERY_PIN)
 
 # I2C Peripherals
 LIGHT_SENSOR = adafruit_veml7700.VEML7700(I2C_BUS)

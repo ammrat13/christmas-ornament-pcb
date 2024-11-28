@@ -112,14 +112,14 @@ class UIntBLECharacteristic(BLECharacteristic):
 # all be registered in the `_characteristics` list below. The IDs must also be
 # what the module returns.
 
-CHAR_HEAP_FREE = UIntBLECharacteristic(1, b"0x0002", length=4)
+CHAR_HEAP_FREE = UIntBLECharacteristic(1, b"0x0002", length=4, initial_value=0xffffffff)
 """The amount of free heap space on the device, in bytes."""
-CHAR_BATTERY_VOLTAGE = UIntBLECharacteristic(2, b"0x0003", length=2)
+CHAR_BATTERY_ADC = UIntBLECharacteristic(2, b"0x0003", length=2, initial_value=0)
 """The battery voltage as a raw ADC value."""
 
 _characteristics = [
     CHAR_HEAP_FREE,
-    CHAR_BATTERY_VOLTAGE,
+    CHAR_BATTERY_ADC,
 ]
 """List of all the characteristics."""
 

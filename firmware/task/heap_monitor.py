@@ -1,7 +1,5 @@
 """
 A task for monitoring the heap usage of the CircuitPython VM.
-
-The number of bytes free will be logged and will be sent over BLE.
 """
 
 import adafruit_logging
