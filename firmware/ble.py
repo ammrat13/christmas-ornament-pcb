@@ -89,7 +89,7 @@ class UIntBLECharacteristic(BLECharacteristic):
         return hex(value)
 
     def _deserialize(self, serialized):
-        return int(serialized, 16)
+        return int(serialized.replace("-", ""), 16)
 
     def add(self):
         res = platform.BLE.command_check_OK(
@@ -112,10 +112,13 @@ class UIntBLECharacteristic(BLECharacteristic):
 # all be registered in the `_characteristics` list below. The IDs must also be
 # what the module returns.
 
-
-CHAR_BATTERY_VOLTAGE = UIntBLECharacteristic(1, b"0x0002", length=2)
+CHAR_HEAP_FREE = UIntBLECharacteristic(1, b"0x0002", length=4)
+"""The amount of free heap space on the device, in bytes."""
+CHAR_BATTERY_VOLTAGE = UIntBLECharacteristic(2, b"0x0003", length=2)
+"""The battery voltage as a raw ADC value."""
 
 _characteristics = [
+    CHAR_HEAP_FREE,
     CHAR_BATTERY_VOLTAGE,
 ]
 """List of all the characteristics."""
