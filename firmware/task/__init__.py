@@ -8,9 +8,13 @@ check for that.
 import adafruit_logging
 import asyncio
 
+import task.heap_monitor
+
 logger = adafruit_logging.getLogger()
 
-_tasks = []
+_tasks = [
+    task.heap_monitor.run,
+]
 """List of all the `async` functions to run."""
 
 async def run():

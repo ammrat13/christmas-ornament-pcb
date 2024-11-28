@@ -4,6 +4,7 @@ import platform
 
 import adafruit_logging
 import asyncio
+import gc
 
 import ble
 import config
@@ -53,5 +54,8 @@ if __name__ == "__main__":
     logger.info("Got to `main`!")
     initialize_config()
     initialize_ble()
+
+    # The initialization code creates a lot of garbage. Let's clean it up.
+    gc.collect()
 
     asyncio.run(task.run())
