@@ -33,7 +33,7 @@ async def run():
         platform.LED.value = False
 
 @task.util.periodic(5.0)
-async def update_light():
+async def update():
     val = lux_moving_avg
     val_int = int(val * 1000.0)
     logger.info(f"light_sensing: {val:.2f} lx")
