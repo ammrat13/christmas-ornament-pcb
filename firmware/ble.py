@@ -37,6 +37,15 @@ class BLECharacteristic:
         ser = self._serialize(value).encode("utf-8")
         platform.BLE.command_check_OK(b"AT+GATTCHAR=" + self.index_bytes + b"," + ser)
 
+    async def read_async(self):
+        res = await platform.BLE.command_async_check_OK(b"AT+GATTCHAR=" + self.index_bytes)
+        res = res.decode("utf-8").strip()
+        return self._deserialize(res)
+
+    async def write_async(self, value):
+        ser = self._serialize(value).encode("utf-8")
+        await platform.BLE.command_async_check_OK(b"AT+GATTCHAR=" + self.index_bytes + b"," + ser)
+
     def add(self):
         """
         Add the characteristic to the service. Different characteristics might

@@ -7,7 +7,6 @@ thing imported in `code.py`.
 """
 
 import adafruit_adxl34x
-import adafruit_bluefruitspi
 import adafruit_sdcard
 import adafruit_veml7700
 import analogio
@@ -16,6 +15,8 @@ import busio
 import digitalio
 import neopixel
 import storage
+
+import driver.bluefruitspi
 
 # Pins
 LED_PIN = board.D13
@@ -54,6 +55,6 @@ storage.mount(USD_VFS, "/sd")
 BLE_CS = digitalio.DigitalInOut(BLE_CS_PIN)
 BLE_RST = digitalio.DigitalInOut(BLE_RST_PIN)
 BLE_IRQ = digitalio.DigitalInOut(BLE_IRQ_PIN)
-BLE = adafruit_bluefruitspi.BluefruitSPI(SPI_BUS, BLE_CS, BLE_IRQ, BLE_RST, debug=False)
+BLE = driver.bluefruitspi.BluefruitSPI(SPI_BUS, BLE_CS, BLE_IRQ, BLE_RST)
 BLE.init()
 BLE.command_check_OK(b"ATZ")

@@ -15,4 +15,4 @@ async def run():
     adc_val = platform.BATTERY.value
     voltage_val = (adc_val * 2) * 3.3 / 65535.0
     logger.debug(f"battery_monitor: {voltage_val:.2f} V")
-    ble.CHAR_BATTERY_ADC.write(adc_val)
+    await ble.CHAR_BATTERY_ADC.write_async(adc_val)

@@ -14,4 +14,4 @@ logger = adafruit_logging.getLogger()
 async def run():
     free = gc.mem_free()
     logger.debug(f"heap_monitor: {free} bytes free")
-    ble.CHAR_HEAP_FREE.write(free)
+    await ble.CHAR_HEAP_FREE.write_async(free)
