@@ -23,7 +23,7 @@ class ConfigOption():
     def parse(self, value):
         raise NotImplementedError()
 
-class IntegerConfigOption(ConfigOption):
+class IntConfigOption(ConfigOption):
     def __init__(self, ident, name, default):
         super().__init__(ident, name, default)
     def parse(self, value):
@@ -49,15 +49,32 @@ class BoolConfigOption(ConfigOption):
 CFG_RESET_BLE = BoolConfigOption(0, "RESET_BLE", False)
 """Whether to reset the state of the Bluetooth LE SPI Friend on startup."""
 
-CFG_LOW_LIGHT_THRESHOLD = FloatConfigOption(1, "LOW_LIGHT_THRESHOLD", 30.0)
+CFG_LIGHT_THRESHOLD = FloatConfigOption(1, "LIGHT_THRESHOLD", 30.0)
 """The light level below which the LEDs will be turned on, in lux."""
 CFG_LIGHT_MOVING_AVG = FloatConfigOption(2, "LIGHT_MOVING_AVG", 0.8)
 """The exponential moving average factor for the light sensor."""
 
+CFG_ACCELERATION_THRESHOLD = IntConfigOption(3, "ACCELERATION_THRESHOLD", 18)
+"""
+The acceleration threshold for detecting acceleration, in multiples of 62.5
+milli-g.
+"""
+
+CFG_NEOPIXEL_BRIGHTNESS = IntConfigOption(4, "NEOPIXEL_BRIGHTNESS", 5)
+"""The brightness of the NeoPixels when they are flashing, from 0 to 255."""
+CFG_NEOPIXEL_FLASH_TIME = FloatConfigOption(5, "NEOPIXEL_FLASH_TIME", 5.0)
+"""The time in seconds for the NeoPixels to flash."""
+CFG_NEOPIXEL_FLASH_SPEED = FloatConfigOption(6, "NEOPIXEL_FLASH_SPEED", 0.1)
+"""The number of seconds to wait between frames of flashing."""
+
 _config_option_registry = [
     CFG_RESET_BLE,
-    CFG_LOW_LIGHT_THRESHOLD,
+    CFG_LIGHT_THRESHOLD,
     CFG_LIGHT_MOVING_AVG,
+    CFG_ACCELERATION_THRESHOLD,
+    CFG_NEOPIXEL_BRIGHTNESS,
+    CFG_NEOPIXEL_FLASH_TIME,
+    CFG_NEOPIXEL_FLASH_SPEED,
 ]
 """List of all possible configuration options."""
 
