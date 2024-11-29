@@ -127,13 +127,17 @@ CHAR_HEAP_FREE = UIntBLECharacteristic(1, b"0x0002", length=4, initial_value=0xf
 CHAR_BATTERY_ADC = UIntBLECharacteristic(2, b"0x0003", length=2, initial_value=0)
 """The battery voltage as a raw ADC value."""
 
-CHAR_LIGHT_SENSOR = UIntBLECharacteristic(3, b"0x0004", length=4, initial_value=0)
+CHAR_LIGHT_SENSOR_VALUE = UIntBLECharacteristic(3, b"0x0004", length=4, initial_value=0)
 """The light sensor value, in millilux."""
+
+CHAR_ACCELEROMETER_COUNT = UIntBLECharacteristic(3, b"0x0005", length=3, initial_value=0)
+"""The number of times the accelerometer has activated."""
 
 _characteristics = [
     CHAR_HEAP_FREE,
     CHAR_BATTERY_ADC,
-    CHAR_LIGHT_SENSOR,
+    CHAR_LIGHT_SENSOR_VALUE,
+    CHAR_ACCELEROMETER_COUNT,
 ]
 """List of all the characteristics."""
 

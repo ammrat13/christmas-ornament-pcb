@@ -36,5 +36,5 @@ async def run():
 async def update():
     val = lux_moving_avg
     val_int = int(val * 1000.0)
-    logger.info(f"light_sensing: {val:.2f} lx")
-    await ble.CHAR_LIGHT_SENSOR.write_async(val_int)
+    logger.info(f"led: {val:.2f} lx")
+    await ble.CHAR_LIGHT_SENSOR_VALUE.write_async(val_int)

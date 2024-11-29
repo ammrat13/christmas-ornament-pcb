@@ -2,6 +2,7 @@
 Task to flash the NeoPixels for some time when acceleration is detected.
 """
 
+import adafruit_adxl34x
 import asyncio
 import micropython
 import supervisor
@@ -9,6 +10,8 @@ import supervisor
 import config
 import platform
 import task.util
+
+logger = logging.getLogger()
 
 activation_count = 0
 """The number of times acceleration has been detected, modulo 2**24"""
@@ -28,6 +31,7 @@ async def accel_run():
     await accel_loop()
 
 def accel_init():
+    platform.ACCELEROMETER.range = adafruit_adxl34x.Range.RANGE_16_G
     platform.ACCELEROMETER.enable_motion_detection(
         threshold=config.get(config.CFG_ACCELERATION_THRESHOLD),
     )
@@ -76,3 +80,8 @@ async def np_loop():
                 platform.NEOPIXEL[i] = (br, br, br)
             platform.NEOPIXEL.show()
             await asyncio.sleep(config.get(config.CFG_NEOPIXEL_FLASH_SPEED))
+
+@task.util.periodic(5.0)
+async def update():
+    logger.info(f"neopixel: activated {activation_count} times")
+    await ble.CHAR_ACCELEROMETER_COUNT.write_async(activation_count)
