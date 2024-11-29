@@ -1,0 +1,4 @@
+# Ignore toolchain
+/mpy-cross
+# Ignore compiled files
+*.mpy
