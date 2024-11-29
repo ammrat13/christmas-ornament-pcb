@@ -1,8 +1,9 @@
 MPY_CROSS := ./mpy-cross
 MPY_FLAGS := -v -O2
 
+# List all the files that need to be compiled. This does not include `code.py`,
+# since CircuitPython does not recognize `.mpy` files as the main script.
 PY_FILES := \
-	code.py \
 	platform.py \
 	config.py \
 	ble.py \
@@ -23,10 +24,11 @@ clean:
 	rm -f $(MPY_FILES)
 
 .PHONY: install
-install: $(MPY_FILES)
+install: code.py $(MPY_FILES)
 ifndef PREFIX
 	$(error PREFIX is not set)
 endif
+	install -t $(PREFIX) code.py
 	for mpy_file in $(MPY_FILES); do \
 		targ=$(PREFIX)/$$(dirname $$mpy_file); \
 		install -d $$targ; \
