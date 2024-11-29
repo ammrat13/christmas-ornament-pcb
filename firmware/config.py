@@ -62,7 +62,7 @@ milli-g.
 
 CFG_NEOPIXEL_BRIGHTNESS = IntConfigOption(4, "NEOPIXEL_BRIGHTNESS", 5)
 """The brightness of the NeoPixels when they are flashing, from 0 to 255."""
-CFG_NEOPIXEL_FLASH_TIME = FloatConfigOption(5, "NEOPIXEL_FLASH_TIME", 5.0)
+CFG_NEOPIXEL_FLASH_TIME = FloatConfigOption(5, "NEOPIXEL_FLASH_TIME", 1.0)
 """The time in seconds for the NeoPixels to flash."""
 CFG_NEOPIXEL_FLASH_SPEED = FloatConfigOption(6, "NEOPIXEL_FLASH_SPEED", 0.1)
 """The number of seconds to wait between frames of flashing."""
