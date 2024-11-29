@@ -34,7 +34,7 @@ def accel_init():
 
 @task.util.periodic(0.2)
 async def accel_loop():
-    global activation_count
+    global last_activation_ticks, activation_count
 
     is_act = platform.ACCELEROMETER.events["motion"]
     if is_act:
