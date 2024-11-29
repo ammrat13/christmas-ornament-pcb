@@ -20,10 +20,12 @@ class BLECharacteristic:
     has a way to parse values from the module and serialize values for it.
     """
 
-    def __init__(self, index, uuid):
+    def __init__(self, index, uuid_bytes, initial_value):
         self.index = index
         self.index_bytes = str(index).encode("utf-8")
-        self.uuid = uuid
+        self.uuid_bytes = uuid_bytes
+        self.initial_value = initial_value
+        self.initial_value_bytes = self._serialize(initial_value).encode("utf-8")
 
     def read(self):
         res = (platform.BLE.command_check_OK(b"AT+GATTCHAR=" + self.index_bytes)
@@ -75,15 +77,14 @@ class UIntBLECharacteristic(BLECharacteristic):
     def __init__(
         self,
         index,
-        uuid,
-        properties=BLE_CHARACTERISTIC_PROPERTIES_READONLY,
+        uuid_bytes,
+        properties_bytes=BLE_CHARACTERISTIC_PROPERTIES_READONLY,
         length=4,
         initial_value=0
     ):
-        super().__init__(index, uuid)
-        self.properties_bytes = properties
+        super().__init__(index, uuid_bytes, initial_value)
+        self.properties_bytes = properties_bytes
         self.length_bytes = str(length).encode("utf-8")
-        self.initial_value_bytes = hex(initial_value).encode("utf-8")
 
     def _serialize(self, value):
         return hex(value)
@@ -94,7 +95,7 @@ class UIntBLECharacteristic(BLECharacteristic):
     def add(self):
         res = platform.BLE.command_check_OK(
             b"AT+GATTADDCHAR=UUID="
-            + self.uuid
+            + self.uuid_bytes
             + b",PROPERTIES="
             + self.properties_bytes
             + b",MIN_LEN="
@@ -173,3 +174,12 @@ def factory_reset():
         char.add()
         logger.debug(f"    added characteristic {char.index}.")
     platform.BLE.command_check_OK(b"ATZ", delay=1.0)
+
+def set_initial_values():
+    """
+    Set all the characteristics to their initial values.
+    """
+    logger.debug("Setting all characteristics to initial values...")
+    for char in _characteristics:
+        char.write(char.initial_value)
+        logger.debug(f"    set characteristic {char.index} to {char.initial_value}.")

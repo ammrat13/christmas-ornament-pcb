@@ -39,13 +39,15 @@ def initialize_config():
 def initialize_ble():
     """
     Initialize the BLE module. We'll factory-reset it if we have to. In any
-    case, we'll dump the info to the log.
+    case, we'll set all the characteristics to be their initial values. We'll
+    also dump to the log.
     """
 
     if config.get(config.CFG_RESET_BLE.ident):
         ble.factory_reset()
         config.set(config.CFG_RESET_BLE.ident, False)
 
+    ble.set_initial_values()
     ble.dump_info()
 
 
