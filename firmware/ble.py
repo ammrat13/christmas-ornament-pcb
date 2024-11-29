@@ -127,9 +127,13 @@ CHAR_HEAP_FREE = UIntBLECharacteristic(1, b"0x0002", length=4, initial_value=0xf
 CHAR_BATTERY_ADC = UIntBLECharacteristic(2, b"0x0003", length=2, initial_value=0)
 """The battery voltage as a raw ADC value."""
 
+CHAR_LIGHT_SENSOR = UIntBLECharacteristic(3, b"0x0004", length=4, initial_value=0)
+"""The light sensor value, in millilux."""
+
 _characteristics = [
     CHAR_HEAP_FREE,
     CHAR_BATTERY_ADC,
+    CHAR_LIGHT_SENSOR,
 ]
 """List of all the characteristics."""
 

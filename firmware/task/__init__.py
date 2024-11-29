@@ -10,12 +10,15 @@ import asyncio
 
 import task.battery_monitor
 import task.heap_monitor
+import task.light_sensing
 
 logger = adafruit_logging.getLogger()
 
 _tasks = [
     task.battery_monitor.run,
     task.heap_monitor.run,
+    task.light_sensing.run,
+    task.light_sensing.update_light,
 ]
 """List of all the `async` functions to run."""
 
