@@ -10,7 +10,7 @@ import task.util
 
 logger = adafruit_logging.getLogger()
 
-@task.util.periodic(10)
+@task.util.periodic(10.0)
 async def run():
     free = gc.mem_free()
     logger.debug(f"heap_monitor: {free} bytes free")
