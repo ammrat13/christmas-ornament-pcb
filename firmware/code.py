@@ -43,9 +43,9 @@ def initialize_ble():
     also dump to the log.
     """
 
-    if config.get(config.CFG_RESET_BLE.ident):
+    if config.get(config.CFG_RESET_BLE):
         ble.factory_reset()
-        config.set(config.CFG_RESET_BLE.ident, False)
+        config.set(config.CFG_RESET_BLE, False)
 
     ble.set_initial_values()
     ble.dump_info()

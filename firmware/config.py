@@ -86,19 +86,19 @@ Initially, all the values are set to their default. But, this dictionary can be
 updated by the methods below.
 """
 
-def get(ident):
+def get(opt):
     """
-    Get the value of a cofiguration option by its ID.
-    :throws AssertionError: If the ID is not valid.
+    Get the value of a cofiguration option.
     """
+    ident = opt.ident
     assert ident in _config_values
     return _config_values[ident]
 
-def set(ident, value):
+def set(opt, value):
     """
-    Set the value of a configuration option by its ID.
-    :throws AssertionError: If the ID is not valid.
+    Set the value of a configuration option.
     """
+    ident = opt.ident
     assert ident in _config_values
     _config_values[ident] = value
 

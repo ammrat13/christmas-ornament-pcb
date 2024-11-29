@@ -23,11 +23,11 @@ async def run():
 
     # Update the moving average.
     global lux_moving_avg
-    alpha = config.get(config.CFG_LIGHT_MOVING_AVG.ident)
+    alpha = config.get(config.CFG_LIGHT_MOVING_AVG)
     lux_moving_avg = alpha * lux_moving_avg + (1 - alpha) * light
 
     # Check if the light is below the threshold.
-    if light < config.get(config.CFG_LIGHT_THRESHOLD.ident):
+    if light < config.get(config.CFG_LIGHT_THRESHOLD):
         platform.LED.value = True
     else:
         platform.LED.value = False

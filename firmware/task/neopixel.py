@@ -29,7 +29,7 @@ async def accel_run():
 
 def accel_init():
     platform.ACCELEROMETER.enable_motion_detection(
-        threshold=config.get(config.CFG_ACCELERATION_THRESHOLD.ident),
+        threshold=config.get(config.CFG_ACCELERATION_THRESHOLD),
     )
 
 @task.util.periodic(0.2)
@@ -62,7 +62,7 @@ async def np_loop():
         # an acceleration event to happen.
         current_ticks = supervisor.ticks_ms()
         delta_ticks = (current_ticks - last_activation_ticks) & _TICKS_MAX
-        max_delta_s = config.get(config.CFG_NEOPIXEL_FLASH_TIME.ident)
+        max_delta_s = config.get(config.CFG_NEOPIXEL_FLASH_TIME)
         if delta_ticks > 1000.0 * max_delta_s:
             await last_activation_ticks_changed.wait()
             last_activation_ticks_changed.clear()
@@ -72,7 +72,7 @@ async def np_loop():
         for i in range(platform.NEOPIXEL_LEN + 1):
             platform.NEOPIXEL.fill((0, 0, 0))
             if i < platform.NEOPIXEL_LEN:
-                br = config.get(config.CFG_NEOPIXEL_BRIGHTNESS.ident)
+                br = config.get(config.CFG_NEOPIXEL_BRIGHTNESS)
                 platform.NEOPIXEL[i] = (br, br, br)
             platform.NEOPIXEL.show()
-            await asyncio.sleep(config.get(config.CFG_NEOPIXEL_FLASH_SPEED.ident))
+            await asyncio.sleep(config.get(config.CFG_NEOPIXEL_FLASH_SPEED))
