@@ -130,7 +130,7 @@ CHAR_BATTERY_ADC = UIntBLECharacteristic(2, b"0x0003", length=2, initial_value=0
 CHAR_LIGHT_SENSOR_VALUE = UIntBLECharacteristic(3, b"0x0004", length=4, initial_value=0)
 """The light sensor value, in millilux."""
 
-CHAR_ACCELEROMETER_COUNT = UIntBLECharacteristic(3, b"0x0005", length=3, initial_value=0)
+CHAR_ACCELEROMETER_COUNT = UIntBLECharacteristic(4, b"0x0005", length=3, initial_value=0)
 """The number of times the accelerometer has activated."""
 
 _characteristics = [

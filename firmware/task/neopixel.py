@@ -3,15 +3,17 @@ Task to flash the NeoPixels for some time when acceleration is detected.
 """
 
 import adafruit_adxl34x
+import adafruit_logging
 import asyncio
 import micropython
 import supervisor
 
+import ble
 import config
 import platform
 import task.util
 
-logger = logging.getLogger()
+logger = adafruit_logging.getLogger()
 
 activation_count = 0
 """The number of times acceleration has been detected, modulo 2**24"""
