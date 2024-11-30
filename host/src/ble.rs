@@ -8,7 +8,6 @@ use btleplug::api::{Central, Manager as _, Peripheral as _, ScanFilter, Service}
 use btleplug::platform::{Adapter, Manager, Peripheral};
 use uuid::Uuid;
 
-#[allow(dead_code)]
 static ORNAMENT_SERVICE_UUID: Uuid = Uuid::from_u128(0x895225feacaf4f21b0e71adb51e11653u128);
 
 /// Connect to the christmas ornament, given its display `name`.
