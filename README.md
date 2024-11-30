@@ -11,5 +11,6 @@ TODO: Add feature list
 
 ## Project Structure
   * `firmware`: code for the MCU
+  * `host`: code to communicate with the MCU over Bluetooth LE
   * `kicad`: board files
   * `kicad-lib`: global library files referenced by the board files
