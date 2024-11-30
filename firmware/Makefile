@@ -1,4 +1,4 @@
-MPY_CROSS := ./mpy-cross
+MPY_CROSS ?= ./mpy-cross
 MPY_FLAGS := -v -O2
 
 # List all the files that need to be compiled. This does not include `code.py`,
