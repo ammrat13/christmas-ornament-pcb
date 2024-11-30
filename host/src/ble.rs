@@ -9,12 +9,12 @@ use btleplug::platform::{Adapter, Manager, Peripheral};
 use uuid::Uuid;
 
 static ORNAMENT_SERVICE_UUID: Uuid = Uuid::from_u128(0x895225feacaf4f21b0e71adb51e11653u128);
-static BLE_BASE_UUID: Uuid = Uuid::from_u128(0x0000000000001000800000805f9b34fb);
+static BLE_BASE_UUID: Uuid = Uuid::from_u128(0x0000000000001000800000805f9b34fbu128);
 
 /// Convert a 16-bit UUID to a 128-bit UUID. All characteristics use 16-bit
 /// UUIDs since the Bluefruit SPI Friend only supports those.
 pub fn uuid_16(uuid16: u16) -> Uuid {
-    Uuid::from_u128(BLE_BASE_UUID.as_u128() + ((uuid16 as u128) << 96))
+    Uuid::from_u128(BLE_BASE_UUID.as_u128() + (Into::<u128>::into(uuid16) << 96))
 }
 
 /// Connect to the christmas ornament, given its display `name`.
