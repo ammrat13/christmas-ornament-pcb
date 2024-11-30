@@ -3,6 +3,7 @@
 //! actual BLE characteristics. Here, we implement the logic for `GET` and
 //! `POST` requests.
 
+mod scaledqty;
 mod uintqty;
 
 use axum::http::StatusCode;
@@ -26,6 +27,8 @@ pub fn router() -> Router<ApplicationState> {
     Router::new()
         .route("/heap/free", get(get_heap_free))
         .route("/accelerometer/count", get(get_accelerometer_count))
+        .route("/battery/volts", get(get_battery_volts))
+        .route("/light/lux", get(get_light_lux))
 }
 
 /// Utility method for the common task of reading a characteristic and returning
@@ -43,7 +46,7 @@ pub async fn read_characteristic<T>(
         Some(c) => {
             log::debug!("    successfully found characteristic");
             c
-        },
+        }
         None => {
             log::error!("Could not find characteristic with UUID16 {:04x}", uuid16);
             return Err((StatusCode::NOT_FOUND, Json(None)));
@@ -55,13 +58,15 @@ pub async fn read_characteristic<T>(
         Ok(v) => {
             log::debug!("    successfully read characteristic");
             Ok(v)
-        },
+        }
         Err(_) => {
             log::error!("Could not read characteristic with UUID16 {:04x}", uuid16);
-            return Err((StatusCode::INTERNAL_SERVER_ERROR, Json(None)))
+            return Err((StatusCode::INTERNAL_SERVER_ERROR, Json(None)));
         }
     }
 }
 
 uintqty::get_method!(get_heap_free, 0x0002, 4, "bytes");
+scaledqty::get_method!(get_battery_volts, 0x0003, 2, 1.00709544518e-4, "volts");
+scaledqty::get_method!(get_light_lux, 0x0004, 4, 1e-3, "lux");
 uintqty::get_method!(get_accelerometer_count, 0x0005, 3);
