@@ -72,6 +72,7 @@ pub async fn get(
         num <<= 8;
         num |= Into::<u64>::into(*byte);
     }
+    log::debug!("Characteristic {:04x} - {}", uuid16, num);
 
     (
         StatusCode::OK,
