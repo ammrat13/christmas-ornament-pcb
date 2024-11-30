@@ -1,0 +1,20 @@
+[package]
+name = "christmas-ornament-host"
+version = "0.1.0"
+authors = ["Ammar Ratnani <ammrat13@gmail.com>"]
+edition = "2021"
+rust-version = "1.82"
+description = "Host code for interacting with the christmas ornament"
+repository = "https://github.com/ammrat13/christmas-ornament-pcb"
+license = "MIT"
+
+[dependencies]
+anyhow = "1.0.93"
+argparse = "0.2.2"
+axum = "0.7.9"
+btleplug = "0.11.6"
+env_logger = "0.11.5"
+log = "0.4.22"
+phf = "0.11.2"
+tokio = { version = "1.41.1", features = ["rt-multi-thread", "macros"] }
+uuid = "1.11.0"
