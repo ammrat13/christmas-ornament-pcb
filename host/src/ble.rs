@@ -4,11 +4,18 @@
 use std::time::Duration;
 
 use anyhow::{Context, Result};
-use btleplug::api::{Central, Manager as _, Peripheral as _, ScanFilter, Service};
+use btleplug::api::{Central, Characteristic, Manager as _, Peripheral as _, ScanFilter, Service};
 use btleplug::platform::{Adapter, Manager, Peripheral};
 use uuid::Uuid;
 
 static ORNAMENT_SERVICE_UUID: Uuid = Uuid::from_u128(0x895225feacaf4f21b0e71adb51e11653u128);
+static BLE_BASE_UUID: Uuid = Uuid::from_u128(0x0000000000001000800000805f9b34fb);
+
+/// Convert a 16-bit UUID to a 128-bit UUID. All characteristics use 16-bit
+/// UUIDs since the Bluefruit SPI Friend only supports those.
+pub fn uuid_16(uuid16: u16) -> Uuid {
+    Uuid::from_u128(BLE_BASE_UUID.as_u128() + ((uuid16 as u128) << 96))
+}
 
 /// Connect to the christmas ornament, given its display `name`.
 pub async fn connect(name: &str, scan_duration: &Duration) -> Result<Peripheral> {
@@ -105,4 +112,18 @@ pub fn get_service(ornament: &Peripheral) -> Result<Service> {
         .find(|s| s.uuid == ORNAMENT_SERVICE_UUID)
         .context("Could not find the christmas ornament's service")
         .cloned()
+}
+
+pub fn find_characteristic(service: &Service, uuid: Uuid) -> Option<&Characteristic> {
+    service.characteristics.iter().find(|c| c.uuid == uuid)
+}
+
+pub async fn read_characteristic(
+    ornament: &Peripheral,
+    characteristic: &Characteristic,
+) -> Result<Vec<u8>> {
+    ornament
+        .read(characteristic)
+        .await
+        .context("Could not read characteristic")
 }
