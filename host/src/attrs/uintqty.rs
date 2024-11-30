@@ -65,6 +65,12 @@ pub async fn get(
         return (StatusCode::INTERNAL_SERVER_ERROR, Json(None));
     }
 
+    // Special case: if all the bytes are 0xff, then the value has not yet been
+    // set by the ornament.
+    if bytes.iter().all(|b| *b == 0xff) {
+        return (StatusCode::SERVICE_UNAVAILABLE, Json(None));
+    }
+
     // Convert the value to a number. Note that the returned bytes are
     // little-endian.
     let mut num = 0u64;
