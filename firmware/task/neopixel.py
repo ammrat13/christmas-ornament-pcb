@@ -89,3 +89,31 @@ async def np_loop():
 async def update():
     logger.info(f"neopixel: activated {activation_count} times")
     await ble.CHAR_ACCELEROMETER_COUNT.write_async(activation_count)
+
+async def reconfigure():
+    # First, update the RD characteristic with the current configuration.
+    cur_config = int(config.get(config.CFG_ACCELERATION_THRESHOLD) * 1000)
+    await ble.CHAR_CFG_ACCELERATION_THRESHOLD_RD.write_async(cur_config)
+
+    # Now, go into the main loop of waiting for changes.
+    @task.util.periodic(30.0)
+    async def loop():
+        # Read the current configuration. If it's the special value of, then we
+        # don't have any data.
+        ble_config = await ble.CHAR_CFG_ACCELERATION_THRESHOLD_WR.read_async()
+        logger.debug(f"neopixel: read configuration {ble_config:04x}")
+        if ble_config == 0xffff:
+            return
+
+        # Update the configuration if it's changed.
+        ble_value = ble_config / 1000
+        if ble_value != config.get(config.CFG_ACCELERATION_THRESHOLD):
+            # Set the threshold on the accelerometer.
+            thresh = round(ble_value / 0.0625)
+            platform.ACCELEROMETER.enable_motion_detection(threshold=thresh)
+            # Set the configuration and update the host's value as well.
+            config.set(config.CFG_ACCELERATION_THRESHOLD, ble_value)
+            await ble.CHAR_CFG_ACCELERATION_THRESHOLD_RD.write_async(ble_config)
+            logger.info(f"neopixel: threshold set to {ble_value} g")
+
+    await loop()

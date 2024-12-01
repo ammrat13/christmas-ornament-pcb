@@ -47,11 +47,11 @@ async def reconfigure():
     # Now, go into the main loop of waiting for changes.
     @task.util.periodic(30.0)
     async def loop():
-        # Read the current configuration. If it's the special value of 0xffff,
-        # then we don't have any data.
+        # Read the current configuration. If it's the special value, then we
+        # don't have any data.
         ble_config = await ble.CHAR_CFG_LIGHT_THRESHOLD_WR.read_async()
-        logger.debug(f"led: read configuration {ble_config:04x}")
-        if ble_config == 0xffff:
+        logger.debug(f"led: read configuration {ble_config:08x}")
+        if ble_config == 0xffffffff:
             return
 
         # Update the configuration if it's changed. Make sure to update the

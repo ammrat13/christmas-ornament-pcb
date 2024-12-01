@@ -24,6 +24,7 @@ _tasks = [
     task.neopixel.accel_run,
     task.neopixel.np_run,
     task.neopixel.update,
+    task.neopixel.reconfigure,
 ]
 """List of all the `async` functions to run."""
 
