@@ -4,6 +4,7 @@ MPY_FLAGS := -v -O2
 # List all the files that need to be compiled. This does not include `code.py`,
 # since CircuitPython does not recognize `.mpy` files as the main script.
 PY_FILES := \
+	entrypoint.py \
 	platform.py \
 	config.py \
 	ble.py \
