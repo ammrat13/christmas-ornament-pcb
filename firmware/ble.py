@@ -145,13 +145,13 @@ CHAR_LIGHT_SENSOR_VALUE = UIntBLECharacteristic(3, b"0x0004", length=4, initial_
 CHAR_ACCELEROMETER_COUNT = UIntBLECharacteristic(4, b"0x0005", length=3, initial_value=0)
 """The number of times the accelerometer has activated."""
 
-CHAR_CFG_LIGHT_THRESHOLD_RD = UIntBLECharacteristic(5, b"0x0006", length=2, initial_value=0xffff)
+CHAR_CFG_LIGHT_THRESHOLD_RD = UIntBLECharacteristic(5, b"0x0006", length=4, initial_value=0xffffffff)
 """`CFG_LIGHT_THRESHOLD`, in deci-lux."""
 CHAR_CFG_ACCELERATION_THRESHOLD_RD = UIntBLECharacteristic(6, b"0x0007", length=2, initial_value=0xffff)
 """`CFG_ACCELERATION_THRESHOLD`, in milli-g."""
 
 CHAR_CFG_LIGHT_THRESHOLD_WR = UIntBLECharacteristic(
-    7, b"0x0008", properties_bytes=BLE_PROPERTIES_WRITEONLY, length=2, initial_value=0xffff)
+    7, b"0x0008", properties_bytes=BLE_PROPERTIES_WRITEONLY, length=4, initial_value=0xffffffff)
 """Paired with `CHAR_CFG_LIGHT_THRESHOLD_RD`."""
 CHAR_CFG_ACCELERATION_THRESHOLD_WR = UIntBLECharacteristic(
     8, b"0x0009", properties_bytes=BLE_PROPERTIES_WRITEONLY, length=2, initial_value=0xffff)
