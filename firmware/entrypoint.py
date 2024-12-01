@@ -18,6 +18,12 @@ import ble
 import config
 import task
 
+_S_IFREG = const(0o100000)
+"""
+Used for checking if `reset-ble` is a regular file.
+See: https://man7.org/linux/man-pages/man7/inode.7.html
+"""
+
 logger = adafruit_logging.getLogger()
 logger.setLevel(adafruit_logging.DEBUG)
 
@@ -51,12 +57,15 @@ def initialize_ble():
     also dump to the log.
     """
 
-    # Determine whether `/sd/reset-ble` exists.
+    # Determine whether `/sd/reset-ble` exists and is a regular file.
     reset_file_found = False
     try:
-        os.stat("/sd/reset-ble")
-        logger.debug("Found `/sd/reset-ble` - will factory reset")
-        reset_file_found = True
+        stat_res = os.stat("/sd/reset-ble")
+        if stat_res[0] != _S_IFREG:
+            logger.debug("File `/sd/reset-ble` exists, but is not a regular file")
+        else:
+            logger.debug("Found `/sd/reset-ble` - will factory reset")
+            reset_file_found = True
     except OSError:
         logger.debug("Did not find `/sd/reset-ble`")
 
