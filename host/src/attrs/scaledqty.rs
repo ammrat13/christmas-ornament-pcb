@@ -5,12 +5,13 @@
 
 use axum::http::StatusCode;
 use axum::Json;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
 use crate::attrs::uintqty;
+use crate::attrs::uintqty::UIntQtyValue;
 use crate::attrs::ApplicationState;
 
-#[derive(Serialize)]
+#[derive(Deserialize, Serialize)]
 pub struct ScaledQtyValue {
     pub value: f64,
     pub unit: String,
@@ -60,4 +61,38 @@ pub async fn get(
         unit,
     };
     (resp, Json(Some(scaled)))
+}
+
+/// Macro to generate a `POST` method for a characteristic.
+macro_rules! post_method {
+    ($name:ident, $uuid16:literal, $length:literal, $scale:literal, $unit:literal) => {
+        async fn $name(
+            axum::extract::State(state): axum::extract::State<$crate::attrs::ApplicationState>,
+            axum::extract::Json(request): axum::extract::Json<$crate::attrs::scaledqty::ScaledQtyValue>,
+        ) -> axum::http::StatusCode {
+            static_assertions::const_assert!($length != 0);
+            static_assertions::const_assert!($length <= 8);
+            $crate::attrs::scaledqty::post(state, request, $uuid16, $length, $scale, String::from($unit)).await
+        }
+    };
+}
+pub(crate) use post_method;
+
+/// Generic method for `POST` requests.
+pub async fn post(
+    state: ApplicationState,
+    request: ScaledQtyValue,
+    uuid16: u16,
+    length: usize,
+    scale: f64,
+    unit: String,
+) -> StatusCode {
+    // Scale the value back to an integer
+    let scaled = (request.value / scale).round() as u64;
+    let scaled_request = UIntQtyValue {
+        value: scaled,
+        unit: Some(unit.clone()),
+    };
+
+    uintqty::post(state, scaled_request, uuid16, length, Some(unit)).await
 }

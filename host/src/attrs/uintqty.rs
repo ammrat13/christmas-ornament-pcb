@@ -72,12 +72,15 @@ pub async fn get(
     }
 
     // Convert the value to a number. Note that the returned bytes are
-    // little-endian.
-    let mut num = 0u64;
-    for byte in bytes.iter() {
-        num <<= 8;
-        num |= Into::<u64>::into(*byte);
-    }
+    // big-endian.
+    let num = {
+        let mut num = 0u64;
+        for byte in bytes.iter() {
+            num <<= 8;
+            num |= Into::<u64>::into(*byte);
+        }
+        num
+    };
     log::debug!("Characteristic {:04x} - {}", uuid16, num);
 
     (
@@ -86,33 +89,12 @@ pub async fn get(
     )
 }
 
-/// Macro to generate a `POST` method for a characteristic.
-macro_rules! post_method {
-    ($name:ident, $uuid16:literal, $length:literal, $unit:literal) => {
-        async fn $name(
-            axum::extract::State(state): axum::extract::State<$crate::attrs::ApplicationState>,
-            axum::extract::Json(request): axum::extract::Json<$crate::attrs::uintqty::UIntQtyValue>,
-        ) -> axum::http::StatusCode {
-            static_assertions::const_assert!($length != 0);
-            static_assertions::const_assert!($length <= 8);
-            $crate::attrs::uintqty::post(state, request, $uuid16, $length, Some(String::from($unit))).await
-        }
-    };
-    ($name:ident, $uuid16:literal, $length:literal) => {
-        async fn $name(
-            axum::extract::State(state): axum::extract::State<$crate::attrs::ApplicationState>,
-            axum::extract::Json(request): axum::extract::Json<$crate::attrs::uintqty::UIntQtyValue>,
-        ) -> axum::http::StatusCode {
-            static_assertions::const_assert!($length != 0);
-            static_assertions::const_assert!($length <= 8);
-            $crate::attrs::uintqty::post(state, request, $uuid16, $length, None).await
-        }
-    };
-}
-pub(crate) use post_method;
-
 /// Generic method for `POST` requests. Other `post_*` methods will call this
 /// one. The units of the request must match the `unit` of the characteristic.
+///
+/// This method happens to never be directly used in the current implementation.
+/// It is used by `scaledqty::post` instead. That's why we don't have a
+/// `post_method` macro for this method.
 pub async fn post(
     state: ApplicationState,
     request: UIntQtyValue,
@@ -130,13 +112,18 @@ pub async fn post(
         return StatusCode::BAD_REQUEST;
     }
 
-    // Convert the value to bytes. Note that the bytes are little-endian.
-    let mut bytes = Vec::with_capacity(length);
-    let mut num = request.value;
-    for _ in 0..length {
-        bytes.push((num & 0xff) as u8);
-        num >>= 8;
-    }
+    // Convert the value to bytes. Note that the bytes are big-endian.
+    let (bytes, num) = {
+        let mut bytes = Vec::with_capacity(length);
+        let mut num = request.value;
+        for _ in 0..length {
+            bytes.push((num & 0xff) as u8);
+            num >>= 8;
+        }
+        bytes.reverse();
+        (bytes, num)
+    };
+
     // If we have any leftover bytes, then the value is too large
     if num != 0 {
         log::error!("Value is too large for {} bytes: {}", length, request.value);

@@ -113,8 +113,8 @@ uintqty::get_method!(get_heap, 0x0002, 4, "bytes");
 scaledqty::get_method!(get_battery, 0x0003, 2, 1.00709544518e-4, "volts");
 scaledqty::get_method!(get_light, 0x0004, 4, 1e-3, "lux");
 uintqty::get_method!(get_accelerometer, 0x0005, 3);
-scaledqty::get_method!(get_light_threshold, 0x0006, 2, 1e-1, "lux");
+scaledqty::get_method!(get_light_threshold, 0x0006, 4, 1e-1, "lux");
 scaledqty::get_method!(get_accelerometer_threshold, 0x0007, 2, 1e-3, "g");
 
-uintqty::post_method!(post_light_threshold, 0x0008, 2);
-uintqty::post_method!(post_accelerometer_threshold, 0x0009, 2);
+scaledqty::post_method!(post_light_threshold, 0x0008, 4, 1e-1, "lux");
+scaledqty::post_method!(post_accelerometer_threshold, 0x0009, 2, 1e-3, "g");
