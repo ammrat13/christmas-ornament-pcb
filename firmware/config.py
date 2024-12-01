@@ -54,7 +54,7 @@ CFG_LIGHT_THRESHOLD = FloatConfigOption(1, "LIGHT_THRESHOLD", 30.0)
 CFG_LIGHT_MOVING_AVG = FloatConfigOption(2, "LIGHT_MOVING_AVG", 0.8)
 """The exponential moving average factor for the light sensor."""
 
-CFG_ACCELERATION_THRESHOLD = FloatConfigOption(3, "ACCELERATION_THRESHOLD", 1.125)
+CFG_ACCELERATION_THRESHOLD = FloatConfigOption(3, "ACCELERATION_THRESHOLD", 6.25)
 """
 The acceleration threshold for detecting acceleration, in g.
 
