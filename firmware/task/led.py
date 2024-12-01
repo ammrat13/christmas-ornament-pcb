@@ -50,6 +50,7 @@ async def reconfigure():
         # Read the current configuration. If it's the special value of 0xffff,
         # then we don't have any data.
         ble_config = await ble.CHAR_CFG_LIGHT_THRESHOLD_WR.read_async()
+        logger.debug(f"led: read configuration {ble_config:04x}")
         if ble_config == 0xffff:
             return
 
@@ -59,6 +60,6 @@ async def reconfigure():
         if ble_value != config.get(config.CFG_LIGHT_THRESHOLD):
             config.set(config.CFG_LIGHT_THRESHOLD, ble_value)
             await ble.CHAR_CFG_LIGHT_THRESHOLD_RD.write_async(ble_config)
-            log.info(f"led: threshold set to {ble_value} lx")
+            logger.info(f"led: threshold set to {ble_value} lx")
 
     await loop()

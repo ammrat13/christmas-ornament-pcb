@@ -76,9 +76,9 @@ class BLECharacteristic:
 
 BLE_PROPERTIES_READONLY = b"0x02"
 """Properties for a characteristic that the host can only read."""
-BLE_PROPERTIES_WRITEONLY = b"0x04"
+BLE_PROPERTIES_WRITEONLY = b"0x0c"
 """
-Properties for a characteristic that the host can only write-without-response.
+Properties for a characteristic that the host can only write.
 """
 
 class UIntBLECharacteristic(BLECharacteristic):
