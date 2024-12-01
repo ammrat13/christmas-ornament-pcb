@@ -20,7 +20,7 @@ pub fn uuid_16(uuid16: u16) -> Uuid {
 }
 
 /// Connect to the christmas ornament, given its display `name`.
-pub async fn connect(name: &str, scan_duration: &Duration) -> Result<Peripheral> {
+pub async fn connect(name: &str, scan_duration: Duration) -> Result<Peripheral> {
     // See: https://github.com/deviceplug/btleplug/blob/master/examples/discover_adapters_peripherals.rs
 
     // Get a list of BLE adapters from the OS
@@ -48,7 +48,7 @@ pub async fn connect(name: &str, scan_duration: &Duration) -> Result<Peripheral>
             .start_scan(ScanFilter::default())
             .await
             .context("Failed to start scan")?;
-        tokio::time::sleep(*scan_duration).await;
+        tokio::time::sleep(scan_duration).await;
         adapter.stop_scan().await.context("Failed to stop scan")?;
         log::info!("Done scanning for peripherals");
 
