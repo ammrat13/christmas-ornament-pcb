@@ -12,6 +12,7 @@ import task.battery_monitor
 import task.heap_monitor
 import task.led
 import task.neopixel
+import task.watchdog
 
 logger = adafruit_logging.getLogger()
 
@@ -25,6 +26,7 @@ _tasks = [
     task.neopixel.np_run,
     task.neopixel.update,
     task.neopixel.reconfigure,
+    task.watchdog.run,
 ]
 """List of all the `async` functions to run."""
 
