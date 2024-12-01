@@ -35,7 +35,7 @@ async def accel_run():
 def accel_init():
     # Convert the configuration value to the nearest multiple of 62.5 mg.
     thresh = config.get(config.CFG_ACCELERATION_THRESHOLD)
-    thresh = round(threshold / 0.0625)
+    thresh = round(thresh / 0.0625)
 
     platform.ACCELEROMETER.range = adafruit_adxl34x.Range.RANGE_16_G
     platform.ACCELEROMETER.enable_motion_detection(threshold=thresh)
