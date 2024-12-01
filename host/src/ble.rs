@@ -4,7 +4,9 @@
 use std::time::Duration;
 
 use anyhow::{Context, Result};
-use btleplug::api::{Central, Characteristic, Manager as _, Peripheral as _, ScanFilter, Service};
+use btleplug::api::{
+    Central, Characteristic, Manager as _, Peripheral as _, ScanFilter, Service, WriteType,
+};
 use btleplug::platform::{Adapter, Manager, Peripheral};
 use uuid::Uuid;
 
@@ -126,4 +128,15 @@ pub async fn read_characteristic(
         .read(characteristic)
         .await
         .context("Could not read characteristic")
+}
+
+pub async fn write_characteristic(
+    ornament: &Peripheral,
+    characteristic: &Characteristic,
+    value: &[u8],
+) -> Result<()> {
+    ornament
+        .write(characteristic, &value, WriteType::WithoutResponse)
+        .await
+        .context("Could not write characteristic")
 }

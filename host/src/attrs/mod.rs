@@ -7,7 +7,7 @@ mod scaledqty;
 mod uintqty;
 
 use axum::http::StatusCode;
-use axum::routing::get;
+use axum::routing::{get, post};
 use axum::{Json, Router};
 use btleplug::api::Service;
 use btleplug::platform::Peripheral;
@@ -29,8 +29,13 @@ pub fn router() -> Router<ApplicationState> {
         .route("/battery", get(get_battery))
         .route("/light", get(get_light))
         .route("/light/threshold", get(get_light_threshold))
+        .route("/light/threshold", post(post_light_threshold))
         .route("/accelerometer", get(get_accelerometer))
         .route("/accelerometer/threshold", get(get_accelerometer_threshold))
+        .route(
+            "/accelerometer/threshold",
+            post(post_accelerometer_threshold),
+        )
 }
 
 /// Utility method for the common task of reading a characteristic and returning
@@ -63,7 +68,43 @@ pub async fn read_characteristic<T>(
         }
         Err(_) => {
             log::error!("Could not read characteristic with UUID16 {:04x}", uuid16);
-            return Err((StatusCode::INTERNAL_SERVER_ERROR, Json(None)));
+            Err((StatusCode::INTERNAL_SERVER_ERROR, Json(None)))
+        }
+    }
+}
+
+/// Utility method for the common task of writing a characteristic's, given its
+/// 16-bit UUID and the bytes to write.
+pub async fn write_characteristic(
+    state: &ApplicationState,
+    uuid16: u16,
+    value: &[u8],
+) -> StatusCode {
+    // First, convert the 16-bit UUID to a 128-bit UUID
+    let uuid = ble::uuid_16(uuid16);
+    log::info!("Writing characteristic with UUID16 {:04x}", uuid16);
+
+    // Then, get the characteristic from the service
+    let characteristic = match ble::find_characteristic(&state.service, uuid) {
+        Some(c) => {
+            log::debug!("    successfully found characteristic");
+            c
+        }
+        None => {
+            log::error!("Could not find characteristic with UUID16 {:04x}", uuid16);
+            return StatusCode::NOT_FOUND;
+        }
+    };
+
+    // Finally, write the characteristic and return
+    match ble::write_characteristic(&state.peripheral, characteristic, value).await {
+        Ok(_) => {
+            log::debug!("    successfully wrote characteristic");
+            StatusCode::OK
+        }
+        Err(_) => {
+            log::error!("Could not write characteristic with UUID16 {:04x}", uuid16);
+            StatusCode::INTERNAL_SERVER_ERROR
         }
     }
 }
@@ -74,3 +115,6 @@ scaledqty::get_method!(get_light, 0x0004, 4, 1e-3, "lux");
 uintqty::get_method!(get_accelerometer, 0x0005, 3);
 scaledqty::get_method!(get_light_threshold, 0x0006, 2, 1e-1, "lux");
 scaledqty::get_method!(get_accelerometer_threshold, 0x0007, 2, 1e-3, "g");
+
+uintqty::post_method!(post_light_threshold, 0x0008, 2);
+uintqty::post_method!(post_accelerometer_threshold, 0x0009, 2);
