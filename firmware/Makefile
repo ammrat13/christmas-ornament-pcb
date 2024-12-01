@@ -12,6 +12,7 @@ PY_FILES := \
 	task/__init__.py \
 	task/heap_monitor.py \
 	task/battery_monitor.py \
+	task/watchdog.py \
 	task/led.py \
 	task/neopixel.py \
 	task/util.py

@@ -10,7 +10,9 @@ import platform
 import adafruit_logging
 import asyncio
 import gc
+import microcontroller
 import os
+import watchdog
 
 import ble
 import config
@@ -66,6 +68,12 @@ def initialize_ble():
     ble.set_initial_values()
     ble.dump_info()
 
+def initialize_watchdog():
+    timeout = config.get(config.CFG_WATCHDOG_TIMEOUT)
+    logger.debug(f"Initializing the watchdog with timeout {timeout}")
+    microcontroller.watchdog.timeout = timeout
+    microcontroller.watchdog.mode = watchdog.WatchDogMode.RESET
+
 def increment_boot_count():
     """Increment the boot count reported over BLE."""
     boot_count = ble.CHAR_BOOT_COUNT.read()
@@ -83,5 +91,9 @@ def main():
 
     # The initialization code creates a lot of garbage. Let's clean it up.
     gc.collect()
+
+    # Initialize the watchdog last, since it can kill us if we take too long
+    # after this point.
+    initialize_watchdog()
 
     asyncio.run(task.run())

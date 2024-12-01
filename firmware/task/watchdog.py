@@ -1,8 +1,11 @@
 """Task to periodically pet the watchdog to prevent a reset."""
 
-from microcontroller import watchdog as WATCHDOG
+import asyncio
+import microcontroller
+
+import config
 
 async def run():
     while True:
-        WATCHDOG.feed()
+        microcontroller.watchdog.feed()
         await asyncio.sleep(config.get(config.CFG_WATCHDOG_PET_INTERVAL))
