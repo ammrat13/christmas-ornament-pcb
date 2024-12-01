@@ -25,10 +25,12 @@ pub struct ApplicationState {
 /// a new attribute is added.
 pub fn router() -> Router<ApplicationState> {
     Router::new()
-        .route("/heap/free", get(get_heap_free))
-        .route("/accelerometer/count", get(get_accelerometer_count))
-        .route("/battery/volts", get(get_battery_volts))
-        .route("/light/lux", get(get_light_lux))
+        .route("/heap", get(get_heap))
+        .route("/battery", get(get_battery))
+        .route("/light", get(get_light))
+        .route("/light/threshold", get(get_light_threshold))
+        .route("/accelerometer", get(get_accelerometer))
+        .route("/accelerometer/threshold", get(get_accelerometer_threshold))
 }
 
 /// Utility method for the common task of reading a characteristic and returning
@@ -66,7 +68,9 @@ pub async fn read_characteristic<T>(
     }
 }
 
-uintqty::get_method!(get_heap_free, 0x0002, 4, "bytes");
-scaledqty::get_method!(get_battery_volts, 0x0003, 2, 1.00709544518e-4, "volts");
-scaledqty::get_method!(get_light_lux, 0x0004, 4, 1e-3, "lux");
-uintqty::get_method!(get_accelerometer_count, 0x0005, 3);
+uintqty::get_method!(get_heap, 0x0002, 4, "bytes");
+scaledqty::get_method!(get_battery, 0x0003, 2, 1.00709544518e-4, "volts");
+scaledqty::get_method!(get_light, 0x0004, 4, 1e-3, "lux");
+uintqty::get_method!(get_accelerometer, 0x0005, 3);
+scaledqty::get_method!(get_light_threshold, 0x0006, 2, 1e-1, "lux");
+scaledqty::get_method!(get_accelerometer_threshold, 0x0007, 2, 1e-3, "g");
