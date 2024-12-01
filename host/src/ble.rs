@@ -34,10 +34,10 @@ pub async fn connect(name: &str, scan_duration: &Duration) -> Result<Peripheral>
     // We don't know which adapter to use, and we don't have a
     // platform-independent way of getting the user to choose, so we'll just use
     // the first one
-    let adapter = adapters.get(0).context("No bluetooth adapters found")?;
+    let adapter = adapters.first().context("No bluetooth adapters found")?;
 
     // See if we can find the ornament before we start scanning
-    let mut ornament = try_find(name, &adapter).await?;
+    let mut ornament = try_find(name, adapter).await?;
 
     // If we didn't find the ornament, scan for it
     if ornament.is_none() {
@@ -52,7 +52,7 @@ pub async fn connect(name: &str, scan_duration: &Duration) -> Result<Peripheral>
         adapter.stop_scan().await.context("Failed to stop scan")?;
         log::info!("Done scanning for peripherals");
 
-        ornament = try_find(name, &adapter).await?;
+        ornament = try_find(name, adapter).await?;
     }
 
     // If we still didn't find the ornament, give up
@@ -136,7 +136,7 @@ pub async fn write_characteristic(
     value: &[u8],
 ) -> Result<()> {
     ornament
-        .write(characteristic, &value, WriteType::WithoutResponse)
+        .write(characteristic, value, WriteType::WithoutResponse)
         .await
         .context("Could not write characteristic")
 }
