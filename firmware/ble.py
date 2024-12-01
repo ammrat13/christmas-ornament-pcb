@@ -76,6 +76,10 @@ class BLECharacteristic:
 
 BLE_PROPERTIES_READONLY = b"0x02"
 """Properties for a characteristic that the host can only read."""
+BLE_PROPERTIES_WRITEONLY = b"0x04"
+"""
+Properties for a characteristic that the host can only write-without-response.
+"""
 
 class UIntBLECharacteristic(BLECharacteristic):
     """
@@ -119,8 +123,14 @@ class UIntBLECharacteristic(BLECharacteristic):
 # BLE Characteristics
 #
 # These are the characteristics that we want to expose to the host. They must
-# all be registered in the `_characteristics` list below. The IDs must also be
-# what the module returns.
+# all be registered in the `_characteristics` list below. The Indices must also
+# be what the module returns.
+#
+# There are also "Configuration Characteristics", which have a read-only value
+# and a write-only value. The host writes to the write-only value. Each module
+# is responsible for reading the value and updating its configuration to reflect
+# it. Finally, it should write the new value to the read-only value so that the
+# host can read it back.
 
 CHAR_HEAP_FREE = UIntBLECharacteristic(1, b"0x0002", length=4, initial_value=0xffffffff)
 """The amount of free heap space on the device, in bytes."""
@@ -133,11 +143,27 @@ CHAR_LIGHT_SENSOR_VALUE = UIntBLECharacteristic(3, b"0x0004", length=4, initial_
 CHAR_ACCELEROMETER_COUNT = UIntBLECharacteristic(4, b"0x0005", length=3, initial_value=0)
 """The number of times the accelerometer has activated."""
 
+CHAR_CFG_LIGHT_THRESHOLD_RD = UIntBLECharacteristic(5, b"0x0006", length=2, initial_value=0xffff)
+"""`CFG_LIGHT_THRESHOLD`, in deci-lux."""
+CHAR_CFG_ACCELERATION_THRESHOLD_RD = UIntBLECharacteristic(6, b"0x0007", length=2, initial_value=0xffff)
+"""`CFG_ACCELERATION_THRESHOLD`, in milli-g."""
+
+CHAR_CFG_LIGHT_THRESHOLD_WR = UIntBLECharacteristic(
+    7, b"0x0008", properties_bytes=BLE_PROPERTIES_WRITEONLY, length=2, initial_value=0xffff)
+"""Paired with `CHAR_CFG_LIGHT_THRESHOLD_RD`."""
+CHAR_CFG_ACCELERATION_THRESHOLD_WR = UIntBLECharacteristic(
+    8, b"0x0009", properties_bytes=BLE_PROPERTIES_WRITEONLY, length=2, initial_value=0xffff)
+"""Paired with `CHAR_CFG_ACCELERATION_THRESHOLD_RD`."""
+
 _characteristics = [
     CHAR_HEAP_FREE,
     CHAR_BATTERY_ADC,
     CHAR_LIGHT_SENSOR_VALUE,
     CHAR_ACCELEROMETER_COUNT,
+    CHAR_CFG_LIGHT_THRESHOLD_RD,
+    CHAR_CFG_ACCELERATION_THRESHOLD_RD,
+    CHAR_CFG_LIGHT_THRESHOLD_WR,
+    CHAR_CFG_ACCELERATION_THRESHOLD_WR,
 ]
 """List of all the characteristics."""
 
