@@ -69,6 +69,14 @@ CFG_NEOPIXEL_FLASH_TIME = FloatConfigOption(5, "NEOPIXEL_FLASH_TIME", 1.0)
 CFG_NEOPIXEL_FLASH_SPEED = FloatConfigOption(6, "NEOPIXEL_FLASH_SPEED", 0.1)
 """The number of seconds to wait between frames of flashing."""
 
+CFG_WATCHDOG_TIMEOUT = FloatConfigOption(7, "WATCHDOG_TIMEOUT", 10.0)
+"""The time in seconds before the watchdog will reset the device."""
+CFG_WATCHDOG_PET_INTERVAL = FloatConfigOption(8, "WATCHDOG_PET_INTERVAL", 5.0)
+"""
+The time in seconds between watchdog pets. The task to perform the pet will
+become available after this time, but it may not be run immediately.
+"""
+
 _config_option_registry = [
     CFG_RESET_BLE,
     CFG_LIGHT_THRESHOLD,
@@ -77,6 +85,8 @@ _config_option_registry = [
     CFG_NEOPIXEL_BRIGHTNESS,
     CFG_NEOPIXEL_FLASH_TIME,
     CFG_NEOPIXEL_FLASH_SPEED,
+    CFG_WATCHDOG_TIMEOUT,
+    CFG_WATCHDOG_PET_INTERVAL,
 ]
 """List of all possible configuration options."""
 

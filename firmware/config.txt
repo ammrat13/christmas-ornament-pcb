@@ -20,3 +20,9 @@ NEOPIXEL_BRIGHTNESS = 5
 NEOPIXEL_FLASH_TIME = 1.0
 # The number of seconds to wait between frames of flashing
 NEOPIXEL_FLASH_SPEED = 0.1
+
+# The time in seconds before the watchdog will reset the device
+WATCHDOG_TIMEOUT = 10.0
+# The time in seconds between watchdog pets. The task to perform the pet will
+# become available after this time, but it may not be run immediately.
+WATCHDOG_PET_INTERVAL = 5.0
