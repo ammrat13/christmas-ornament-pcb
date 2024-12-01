@@ -3,7 +3,13 @@
 Board files and firmware for my final project for EE 256. I made a relatively
 simple project - just a smart christmas ornament.
 
-TODO: Add feature list
+  * Low-light conditions turn on the LEDs
+  * Shaking the ornament flashes the NeoPixels
+  * Thresholds and flash parameters configurable via micro-SD card
+  * Sensor values, activation statistics, and device health visible over
+    Bluetooth LE
+  * Supports LiIon batteries
+  * Watchdog timer for reliability
 
 ## Block Diagram
 
