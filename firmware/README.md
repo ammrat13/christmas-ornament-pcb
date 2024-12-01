@@ -12,3 +12,16 @@ mount the device at some path `${DEVICE_PATH}` and run
 $ make all
 $ make PREFIX="${DEVICE_PATH}" install
 ```
+
+## Configuration Files
+
+An example configuration file is given in `config.txt`. It should be placed at
+the root of the micro-SD card. Additionally, if a file named `reset-ble` is
+present on the root of the micro-SD card, then the Bluefruit LE SPI friend will
+be factory-reset and repopulated.
+
+## Register Map
+
+Over Bluetooth LE, this firmware provides a service with some characteristics,
+which act as MMIO registers. The registers are defined in `ble.py` as `CHAR_*`.
+The service's UUID is given as `SERVICE_UUID`.
