@@ -130,7 +130,9 @@ class UIntBLECharacteristic(BLECharacteristic):
 # and a write-only value. The host writes to the write-only value. Each module
 # is responsible for reading the value and updating its configuration to reflect
 # it. Finally, it should write the new value to the read-only value so that the
-# host can read it back.
+# host can read it back. Note that `RD` and `WR` are from the host's
+# perspective, meaning we write to the `RD` characteristic and read from the
+# `WR` characteristic.
 
 CHAR_HEAP_FREE = UIntBLECharacteristic(1, b"0x0002", length=4, initial_value=0xffffffff)
 """The amount of free heap space on the device, in bytes."""

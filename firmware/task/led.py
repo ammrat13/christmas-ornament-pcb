@@ -38,3 +38,27 @@ async def update():
     val_int = int(val * 1000.0)
     logger.info(f"led: {val:.2f} lx")
     await ble.CHAR_LIGHT_SENSOR_VALUE.write_async(val_int)
+
+async def reconfigure():
+    # First, update the RD characteristic with the current configuration.
+    cur_config = int(config.get(config.CFG_LIGHT_THRESHOLD) * 10)
+    await ble.CHAR_CFG_LIGHT_THRESHOLD_RD.write_async(cur_config)
+
+    # Now, go into the main loop of waiting for changes.
+    @task.util.periodic(30.0)
+    async def loop():
+        # Read the current configuration. If it's the special value of 0xffff,
+        # then we don't have any data.
+        ble_config = await ble.CHAR_CFG_LIGHT_THRESHOLD_WR.read_async()
+        if ble_config == 0xffff:
+            return
+
+        # Update the configuration if it's changed. Make sure to update the
+        # host's value as well.
+        ble_value = ble_config / 10.0
+        if ble_value != config.get(config.CFG_LIGHT_THRESHOLD):
+            config.set(config.CFG_LIGHT_THRESHOLD, ble_value)
+            await ble.CHAR_CFG_LIGHT_THRESHOLD_RD.write_async(ble_config)
+            log.info(f"led: threshold set to {ble_value} lx")
+
+    await loop()

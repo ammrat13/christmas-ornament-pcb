@@ -20,6 +20,7 @@ _tasks = [
     task.heap_monitor.run,
     task.led.run,
     task.led.update,
+    task.led.reconfigure,
     task.neopixel.accel_run,
     task.neopixel.np_run,
     task.neopixel.update,
