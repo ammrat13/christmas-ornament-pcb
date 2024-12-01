@@ -20,12 +20,20 @@ class BLECharacteristic:
     has a way to parse values from the module and serialize values for it.
     """
 
-    def __init__(self, index, uuid_bytes, initial_value):
+    def __init__(self, index, uuid_bytes, initial_value, wants_reset=True):
+        """
+        Each characteristic has an index for the Bluefruit LE SPI Friend, as
+        well as a UUID for the characteristic itself. An initial value must be
+        provided for adding the characteristic for the first time. The
+        `want_reset` flag indicates whether the characteristic should be reset
+        to its initial value on startup.
+        """
         self.index = index
         self.index_bytes = str(index).encode("utf-8")
         self.uuid_bytes = uuid_bytes
         self.initial_value = initial_value
         self.initial_value_bytes = self._serialize(initial_value).encode("utf-8")
+        self.wants_reset = wants_reset
 
     def read(self):
         res = (platform.BLE.command_check_OK(b"AT+GATTCHAR=" + self.index_bytes)
@@ -93,13 +101,14 @@ class UIntBLECharacteristic(BLECharacteristic):
         uuid_bytes,
         properties_bytes=BLE_PROPERTIES_READONLY,
         length=4,
-        initial_value=None
+        initial_value=None,
+        wants_reset=True,
     ):
         # We use all 1s as a signal to indicate an invalid value
         if initial_value is None:
             initial_value = (1 << (8 * length)) - 1
 
-        super().__init__(index, uuid_bytes, initial_value)
+        super().__init__(index, uuid_bytes, initial_value, wants_reset=wants_reset)
         self.properties_bytes = properties_bytes
         self.length_bytes = str(length).encode("utf-8")
 
@@ -161,6 +170,12 @@ CHAR_CFG_ACCELERATION_THRESHOLD_WR = UIntBLECharacteristic(
     8, b"0x0009", properties_bytes=BLE_PROPERTIES_WRITEONLY, length=2)
 """Paired with `CHAR_CFG_ACCELERATION_THRESHOLD_RD`."""
 
+CHAR_BOOT_COUNT = UIntBLECharacteristic(9, b"0x0010", length=1, initial_value=0, wants_reset=False)
+"""
+The number of times the device has booted. Absolute numbers don't mean much.
+But, it's still useful to see if the device is stuck in a boot loop.
+"""
+
 _characteristics = [
     CHAR_HEAP_FREE,
     CHAR_BATTERY_ADC,
@@ -170,6 +185,7 @@ _characteristics = [
     CHAR_CFG_ACCELERATION_THRESHOLD_RD,
     CHAR_CFG_LIGHT_THRESHOLD_WR,
     CHAR_CFG_ACCELERATION_THRESHOLD_WR,
+    CHAR_BOOT_COUNT,
 ]
 """List of all the characteristics."""
 
@@ -230,5 +246,8 @@ def set_initial_values():
     """
     logger.debug("Setting all characteristics to initial values...")
     for char in _characteristics:
+        # Some characteristics might not want to be reset on startup.
+        if not char.wants_reset:
+            continue
         char.write(char.initial_value)
         logger.debug(f"    set characteristic {char.index} to {char.initial_value}.")

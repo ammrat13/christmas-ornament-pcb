@@ -27,6 +27,7 @@ pub fn router() -> Router<ApplicationState> {
     Router::new()
         .route("/heap", get(get_heap))
         .route("/battery", get(get_battery))
+        .route("/bootcount", get(get_bootcount))
         .route("/light", get(get_light))
         .route("/light/threshold", get(get_light_threshold))
         .route("/light/threshold", post(post_light_threshold))
@@ -118,3 +119,5 @@ scaledqty::get_method!(get_accelerometer_threshold, 0x0007, 2, 1e-3, "g");
 
 scaledqty::post_method!(post_light_threshold, 0x0008, 4, 1e-1, "lux");
 scaledqty::post_method!(post_accelerometer_threshold, 0x0009, 2, 1e-3, "g");
+
+uintqty::get_method!(get_bootcount, 0x0010, 1);

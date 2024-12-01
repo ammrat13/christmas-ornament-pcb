@@ -5,6 +5,7 @@ import platform
 import adafruit_logging
 import asyncio
 import gc
+import os
 
 import ble
 import config
@@ -43,19 +44,38 @@ def initialize_ble():
     also dump to the log.
     """
 
-    if config.get(config.CFG_RESET_BLE):
+    # Determine whether `/sd/reset-ble` exists.
+    reset_file_found = False
+    try:
+        os.stat("/sd/reset-ble")
+        logger.debug("Found `/sd/reset-ble` - will factory reset")
+        reset_file_found = True
+    except OSError:
+        logger.debug("Did not find `/sd/reset-ble`")
+
+    if reset_file_found:
         ble.factory_reset()
-        config.set(config.CFG_RESET_BLE, False)
+        os.remove("/sd/reset-ble")
+        os.sync()
 
     ble.set_initial_values()
     ble.dump_info()
 
+def increment_boot_count():
+    """Increment the boot count reported over BLE."""
+    boot_count = ble.CHAR_BOOT_COUNT.read()
+    boot_count += 1
+    ble.CHAR_BOOT_COUNT.write(boot_count)
+    logger.debug(f"Boot count: {boot_count}")
 
 if __name__ == "__main__":
 
     logger.info("Got to `main`!")
+
     initialize_config()
+
     initialize_ble()
+    increment_boot_count()
 
     # The initialization code creates a lot of garbage. Let's clean it up.
     gc.collect()

@@ -6,9 +6,6 @@
 #
 ################################################################################
 
-# Whether to reset the state of the Bluetooth LE SPI Friend on startup
-RESET_BLE = False
-
 # The light level below which the LEDs will be turned on, in lux
 LIGHT_THRESHOLD = 30.0
 # The exponential moving average factor for the light sensor
