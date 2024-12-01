@@ -41,10 +41,22 @@ class BoolConfigOption(ConfigOption):
     def parse(self, value):
         return value.lower() == "true"
 
+class StrConfigOption(ConfigOption):
+    def __init__(self, ident, name, default):
+        super().__init__(ident, name, default)
+    def parse(self, value):
+        return value
+
 # Configuration Options
 #
 # These must all be registered in the `_config_option_registry` list below. The
 # IDs must also be unique.
+
+CFG_DEVICE_NAME = StrConfigOption(0, "DEVICE_NAME", "Ammar Ratnani EE 256")
+"""
+Name of the device, as shown in Bluetooth scans. Only has an effect once the
+Bluefruit LE SPI module is reset.
+"""
 
 CFG_LIGHT_THRESHOLD = FloatConfigOption(1, "LIGHT_THRESHOLD", 30.0)
 """The light level below which the LEDs will be turned on, in lux."""
@@ -75,6 +87,7 @@ become available after this time, but it may not be run immediately.
 """
 
 _config_option_registry = [
+    CFG_DEVICE_NAME,
     CFG_LIGHT_THRESHOLD,
     CFG_LIGHT_MOVING_AVG,
     CFG_ACCELERATION_THRESHOLD,

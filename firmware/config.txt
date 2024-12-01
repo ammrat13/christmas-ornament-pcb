@@ -6,6 +6,10 @@
 #
 ################################################################################
 
+# Name of the device, as shown in Bluetooth scans. Only has an effect once the
+# Bluefruit LE SPI module is reset.
+DEVICE_NAME = Ammar Ratnani EE 256
+
 # The light level below which the LEDs will be turned on, in lux
 LIGHT_THRESHOLD = 30.0
 # The exponential moving average factor for the light sensor

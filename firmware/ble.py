@@ -11,7 +11,6 @@ import platform
 
 logger = adafruit_logging.getLogger()
 
-DEVICE_NAME = b"Ammar Ratnani EE 256"
 SERVICE_UUID = b"89-52-25-FE-AC-AF-4F-21-B0-E7-1A-DB-51-E1-16-53"
 
 class BLECharacteristic:
@@ -211,12 +210,13 @@ def dump_info():
         logger.info(f"    {line}")
 
 
-def factory_reset():
+def factory_reset(device_name):
     """
     Reset the module to its "default" state.
 
     This will repopulate the module with the services and characteristics that
-    we define here.
+    we define here. The device name is taken as a parameter since it comes from
+    the configuration file.
     """
 
     logger.debug("Resetting the BLE module...")
@@ -226,7 +226,7 @@ def factory_reset():
     logger.debug("    factory reset device.")
 
     # Set the device name
-    platform.BLE.command_check_OK(b"AT+GAPDEVNAME=" + DEVICE_NAME)
+    platform.BLE.command_check_OK(b"AT+GAPDEVNAME=" + device_name.encode("utf-8"))
     platform.BLE.command_check_OK(b"ATZ", delay=1.0)
     logger.debug("    set device name.")
 

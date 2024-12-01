@@ -70,7 +70,7 @@ def initialize_ble():
         logger.debug("Did not find `/sd/reset-ble`")
 
     if reset_file_found:
-        ble.factory_reset()
+        ble.factory_reset(config.get(config.CFG_DEVICE_NAME))
         os.remove("/sd/reset-ble")
         os.sync()
 
