@@ -7,12 +7,16 @@ CircuitPython doesn't error out on those.
 
 import asyncio
 
-def periodic(period):
+def periodic(period, delay_start=True):
     def decorator(task):
         async def wrapper():
-            while True:
-                # Make sure to sleep first to avoid the thundering herd problem.
+            # If we were told to delay the start, do so. This is on by default
+            # to avoid the thundering herd problem.
+            if delay_start:
                 await asyncio.sleep(period)
+            # Now just run the task every so often.
+            while True:
                 await task()
+                await asyncio.sleep(period)
         return wrapper
     return decorator
