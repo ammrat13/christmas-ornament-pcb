@@ -46,9 +46,6 @@ class BoolConfigOption(ConfigOption):
 # These must all be registered in the `_config_option_registry` list below. The
 # IDs must also be unique.
 
-CFG_RESET_BLE = BoolConfigOption(0, "RESET_BLE", False)
-"""Whether to reset the state of the Bluetooth LE SPI Friend on startup."""
-
 CFG_LIGHT_THRESHOLD = FloatConfigOption(1, "LIGHT_THRESHOLD", 30.0)
 """The light level below which the LEDs will be turned on, in lux."""
 CFG_LIGHT_MOVING_AVG = FloatConfigOption(2, "LIGHT_MOVING_AVG", 0.8)
@@ -78,7 +75,6 @@ become available after this time, but it may not be run immediately.
 """
 
 _config_option_registry = [
-    CFG_RESET_BLE,
     CFG_LIGHT_THRESHOLD,
     CFG_LIGHT_MOVING_AVG,
     CFG_ACCELERATION_THRESHOLD,
