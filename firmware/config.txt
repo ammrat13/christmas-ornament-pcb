@@ -14,9 +14,8 @@ LIGHT_THRESHOLD = 30.0
 # The exponential moving average factor for the light sensor
 LIGHT_MOVING_AVG = 0.8
 
-# The acceleration threshold for detecting acceleration, in multiples of 62.5
-# milli-g.
-ACCELERATION_THRESHOLD = 100
+# The acceleration threshold for detecting acceleration, in g
+ACCELERATION_THRESHOLD = 6.25
 
 # The brightness of the NeoPixels when they are flashing, from 0 to 255
 NEOPIXEL_BRIGHTNESS = 5

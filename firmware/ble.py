@@ -74,7 +74,7 @@ class BLECharacteristic:
         """
         return int(response.decode("utf-8").strip()) == self.index
 
-BLE_CHARACTERISTIC_PROPERTIES_READONLY = b"0x02"
+BLE_PROPERTIES_READONLY = b"0x02"
 """Properties for a characteristic that the host can only read."""
 
 class UIntBLECharacteristic(BLECharacteristic):
@@ -87,7 +87,7 @@ class UIntBLECharacteristic(BLECharacteristic):
         self,
         index,
         uuid_bytes,
-        properties_bytes=BLE_CHARACTERISTIC_PROPERTIES_READONLY,
+        properties_bytes=BLE_PROPERTIES_READONLY,
         length=4,
         initial_value=0
     ):
