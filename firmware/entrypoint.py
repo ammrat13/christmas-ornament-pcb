@@ -7,11 +7,15 @@ Entrypoint for the CircuitPython application. The `code.py` file just calls the
 # has to come first.
 import platform
 
+from micropython import const
+
 import adafruit_logging
 import asyncio
 import gc
 import microcontroller
 import os
+import supervisor
+import time
 import watchdog
 
 import ble
@@ -24,8 +28,30 @@ Used for checking if `reset-ble` is a regular file.
 See: https://man7.org/linux/man-pages/man7/inode.7.html
 """
 
+_CTRL_C_TIMEOUT = const(5.0)
+"""How long to wait for a Ctrl-C before starting the program."""
+
 logger = adafruit_logging.getLogger()
 logger.setLevel(adafruit_logging.DEBUG)
+
+def prompt_repl():
+    """
+    Prompt the user to enter the REPL. Wait for a response for some time, before
+    returning to the main program. This is useful for debugging purposes.
+    Returns whether the user entered the REPL.
+    """
+
+    logger.info("Press Ctrl-C to enter the REPL.")
+    logger.info("Otherwise, the program will start in 5 seconds.")
+
+    try:
+        time.sleep(_CTRL_C_TIMEOUT)
+        return False
+    except KeyboardInterrupt:
+        logger.info("Detected Ctrl-C.")
+        return True
+
+    logger.info("Starting the program...")
 
 def initialize_config():
     """
@@ -91,7 +117,8 @@ def increment_boot_count():
     logger.debug(f"Boot count: {boot_count}")
 
 def main():
-    logger.info("Got to `main`!")
+    if prompt_repl():
+        return
 
     initialize_config()
 
@@ -105,4 +132,10 @@ def main():
     # after this point.
     initialize_watchdog()
 
-    asyncio.run(task.run())
+    # Start the main task. If we die for any reason, just reset the board. This
+    # will also automatically `deinit` the watchdog.
+    try:
+        asyncio.run(task.run())
+    finally:
+        logger.error("Main loop died - resetting")
+        supervisor.reload()
